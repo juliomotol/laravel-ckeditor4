@@ -2,7 +2,6 @@
 
 namespace JulioMotol\CKEditor4\Tests;
 
-use Illuminate\Contracts\Filesystem\Filesystem;
 use JulioMotol\CKEditor4\Commands\InstallCommand;
 
 class InstallCommandTest extends TestCase

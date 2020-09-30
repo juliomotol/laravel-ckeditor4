@@ -2,8 +2,6 @@
 
 namespace JulioMotol\CKEditor4\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Console\GeneratorCommand;
 
 class InstallCommand extends GeneratorCommand
@@ -24,7 +22,7 @@ class InstallCommand extends GeneratorCommand
         $publishPath = config('ckeditor4.publish_path');
         $ckeditorVendorPath = base_path('vendor/ckeditor/ckeditor');
 
-        if ($this->files->exists($publishPath) && !$this->confirm(self::SHOULD_OVERWRITE_QUESTION)) {
+        if ($this->files->exists($publishPath) && ! $this->confirm(self::SHOULD_OVERWRITE_QUESTION)) {
             return 1;
         }
 
