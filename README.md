@@ -1,7 +1,7 @@
 # Laravel CKEditor4
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/juliomotol/laravel-ckeditor4.svg?style=flat-square)](https://packagist.org/packages/juliomotol/laravel-ckeditor4)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/juliomotol/laravel-ckeditor4/run-tests?label=tests)](https://github.com/juliomotol/laravel-ckeditor4/actions?query=workflow%3Arun-tests+branch%3Amaster)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/juliomotol/laravel-ckeditor4/Tests?label=tests)](https://github.com/juliomotol/laravel-ckeditor4/actions?query=workflow%3Arun-tests+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/juliomotol/laravel-ckeditor4.svg?style=flat-square)](https://packagist.org/packages/juliomotol/laravel-ckeditor4)
 
 CKEditor4 Publisher for Laravel >= 5.5.
@@ -14,28 +14,31 @@ You can install the package via composer:
 composer require juliomotol/laravel-ckeditor4
 ```
 
-You can publish the config file with:
+## Config
+
+| Key            | Default Value                         | Description                                                             |
+| -------------- | ------------------------------------- | ----------------------------------------------------------------------- |
+| `publish_path` | `public_path('js/plugins/ckeditor4')` | Use this option control where you want to publish the CKEditor4 assets. |
+
+If you want to make changes in the configuration you can publish the config file using:
+
 ```bash
 php artisan vendor:publish --provider="JulioMotol\CKEditor4\CKEdtor4ServiceProvider" --tag="config"
 ```
 
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
 ## Usage
 
-``` php
-$skeleton = new JulioMotol\CKEditor();
-echo $skeleton->echoPhrase('Hello, Spatie!');
+To publish the CKEditor4 assets, simply run the command:
+
+```bash
+php artisan ckeditor4:install
 ```
+
+CKEditor4 assets will be published in `./public/js/plugins/ckeditor4`. You can change the [config](#config) to modify the publish path.
 
 ## Testing
 
-``` bash
+```bash
 composer test
 ```
 
@@ -53,13 +56,13 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [Julio Motol](https://github.com/juliomotol)
-- [All Contributors](../../contributors)
+-   [Julio Motol](https://github.com/juliomotol)
+-   [All Contributors](../../contributors)
 
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-## Package Skeleton Laravel
+## Bootstrapped with Package Skeleton Laravel
 
 This package as generated using [Spatie's Package Skeleton Laravel Template](https://github.com/spatie/package-skeleton-laravel)
