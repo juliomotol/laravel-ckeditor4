@@ -2,9 +2,10 @@
 
 namespace JulioMotol\CKEditor4\Commands;
 
-use Illuminate\Console\GeneratorCommand;
+use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
 
-class InstallCommand extends GeneratorCommand
+class InstallCommand extends Command
 {
     const SHOULD_OVERWRITE_QUESTION = 'CKEditor4 is already installed, do you want to overwrite the old installation?';
 
@@ -12,33 +13,57 @@ class InstallCommand extends GeneratorCommand
 
     public $description = 'Install CKEditor4';
 
-    public function getStub()
+    /**
+     * @var \Illuminate\Filesystem\Filesystem
+     */
+    protected $files;
+
+    /**
+     * @var string
+     */
+    protected $publishPath;
+
+    /**
+     * @var string
+     */
+    protected $ckeditorVendorPath;
+
+    public function __construct(Filesystem $files)
     {
-        return;
+        parent::__construct();
+
+        $this->files = $files;
+        $this->publishPath = config('ckeditor4.publish_path');
+        $this->ckeditorVendorPath = base_path('vendor/ckeditor/ckeditor');
     }
 
     public function handle()
     {
-        $publishPath = config('ckeditor4.publish_path');
-        $ckeditorVendorPath = base_path('vendor/ckeditor/ckeditor');
-
-        if ($this->files->exists($publishPath) && ! $this->confirm(self::SHOULD_OVERWRITE_QUESTION)) {
+        if (
+            $this->files->exists($this->publishPath) &&
+            ! $this->confirm(self::SHOULD_OVERWRITE_QUESTION)
+        ) {
             return 1;
         }
 
-        $this->files->makeDirectory($publishPath, 0755, true, true);
+        $this->installCKEditor4();
 
-        $this->files->copy($ckeditorVendorPath . '/ckeditor.js', $publishPath . '/ckeditor.js');
-        $this->files->copy($ckeditorVendorPath . '/config.js', $publishPath . '/config.js');
-        $this->files->copy($ckeditorVendorPath . '/styles.js', $publishPath . '/styles.js');
-        $this->files->copy($ckeditorVendorPath . '/contents.css', $publishPath . '/contents.css');
-        $this->files->copyDirectory($ckeditorVendorPath . '/adapters', $publishPath . '/adapters');
-        $this->files->copyDirectory($ckeditorVendorPath . '/lang', $publishPath . '/lang');
-        $this->files->copyDirectory($ckeditorVendorPath . '/skins', $publishPath . '/skins');
-        $this->files->copyDirectory($ckeditorVendorPath . '/plugins', $publishPath . '/plugins');
-
-        $this->info('CKEditor4 have been publish in ' . $publishPath);
+        $this->info('CKEditor4 have been publish in ' . $this->publishPath);
 
         return 0;
+    }
+
+    public function installCKEditor4()
+    {
+        $this->files->makeDirectory($this->publishPath, 0755, true, true);
+
+        $this->files->copy($this->ckeditorVendorPath . '/ckeditor.js', $this->publishPath . '/ckeditor.js');
+        $this->files->copy($this->ckeditorVendorPath . '/config.js', $this->publishPath . '/config.js');
+        $this->files->copy($this->ckeditorVendorPath . '/styles.js', $this->publishPath . '/styles.js');
+        $this->files->copy($this->ckeditorVendorPath . '/contents.css', $this->publishPath . '/contents.css');
+        $this->files->copyDirectory($this->ckeditorVendorPath . '/adapters', $this->publishPath . '/adapters');
+        $this->files->copyDirectory($this->ckeditorVendorPath . '/lang', $this->publishPath . '/lang');
+        $this->files->copyDirectory($this->ckeditorVendorPath . '/skins', $this->publishPath . '/skins');
+        $this->files->copyDirectory($this->ckeditorVendorPath . '/plugins', $this->publishPath . '/plugins');
     }
 }
