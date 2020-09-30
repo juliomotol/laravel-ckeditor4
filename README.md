@@ -16,7 +16,7 @@ composer require juliomotol/laravel-ckeditor4
 
 You can publish the config file with:
 ```bash
-php artisan vendor:publish --provider="JulioMotol\CKEditor\CKEdtor4ServiceProvider" --tag="config"
+php artisan vendor:publish --provider="JulioMotol\CKEditor4\CKEdtor4ServiceProvider" --tag="config"
 ```
 
 This is the contents of the published config file:

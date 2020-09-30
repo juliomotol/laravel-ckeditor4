@@ -1,11 +1,11 @@
 <?php
 
-namespace JulioMotol\CKEditor;
+namespace JulioMotol\CKEditor4;
 
 use Illuminate\Support\ServiceProvider;
-use JulioMotol\CKEditor\Commands\InstallCommand;
+use JulioMotol\CKEditor4\Commands\InstallCommand;
 
-class SkeletonServiceProvider extends ServiceProvider
+class CKEditor4ServiceProvider extends ServiceProvider
 {
     public function boot()
     {
