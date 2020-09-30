@@ -2,8 +2,8 @@
 
 namespace JulioMotol\CKEditor\Tests;
 
-use Orchestra\Testbench\TestCase as Orchestra;
 use JulioMotol\CKEditor\CKEditor4ServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {
