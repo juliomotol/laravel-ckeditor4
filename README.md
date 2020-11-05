@@ -31,10 +31,14 @@ php artisan vendor:publish --provider="JulioMotol\CKEditor4\CKEdtor4ServiceProvi
 To publish the CKEditor4 assets, simply run the command:
 
 ```bash
+# Install ckeditor in default path
 php artisan ckeditor4:install
+
+# Install ckeditor to a certain path
+php artisan ckeditor4:install --path=public/foo/bar
 ```
 
-CKEditor4 assets will be published in `./public/js/plugins/ckeditor4`. You can change the [config](#config) to modify the publish path.
+> CKEditor4 assets will be published in `./public/js/plugins/ckeditor4` by default.
 
 ## Testing
 

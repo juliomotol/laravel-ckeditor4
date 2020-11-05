@@ -9,7 +9,9 @@ class InstallCommand extends Command
 {
     const SHOULD_OVERWRITE_QUESTION = 'CKEditor4 is already installed, do you want to overwrite the old installation?';
 
-    public $signature = 'ckeditor4:install';
+    public $signature = 'ckeditor4:install
+        {--path= : The publish path for the CKEditor4 assests}
+        {--force : Install CKEditor4 even if installation already exists}';
 
     public $description = 'Install CKEditor4';
 
@@ -33,14 +35,18 @@ class InstallCommand extends Command
         parent::__construct();
 
         $this->files = $files;
-        $this->publishPath = config('ckeditor4.publish_path');
         $this->ckeditorVendorPath = base_path('vendor/ckeditor/ckeditor');
     }
 
     public function handle()
     {
+        $this->publishPath = $this->option('path')
+            ? base_path($this->option('path'))
+            : config('ckeditor4.publish_path');
+
         if (
             $this->files->exists($this->publishPath) &&
+            ! $this->option('force') &&
             ! $this->confirm(self::SHOULD_OVERWRITE_QUESTION)
         ) {
             return 1;
@@ -53,7 +59,7 @@ class InstallCommand extends Command
         return 0;
     }
 
-    public function installCKEditor4()
+    protected function installCKEditor4()
     {
         $this->files->makeDirectory($this->publishPath, 0755, true, true);
 

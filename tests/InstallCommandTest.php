@@ -35,14 +35,18 @@ class InstallCommandTest extends TestCase
         $this->artisan('ckeditor4:install')
             ->assertExitCode(0);
 
-        $this->assertFileExists($publishPath . '/ckeditor.js');
-        $this->assertFileExists($publishPath . '/config.js');
-        $this->assertFileExists($publishPath . '/styles.js');
-        $this->assertFileExists($publishPath . '/contents.css');
-        $this->assertDirectoryExists($publishPath . '/adapters');
-        $this->assertDirectoryExists($publishPath . '/lang');
-        $this->assertDirectoryExists($publishPath . '/skins');
-        $this->assertDirectoryExists($publishPath . '/plugins');
+        $this->assertInstallation($publishPath);
+    }
+
+    /** @test */
+    public function it_installs_ckeditor4_to_custom_path()
+    {
+        $publishPath = 'public/js/ckeditor';
+
+        $this->artisan("ckeditor4:install --path={$publishPath}")
+            ->assertExitCode(0);
+
+        $this->assertInstallation(base_path($publishPath));
     }
 
     /** @test */
@@ -57,13 +61,18 @@ class InstallCommandTest extends TestCase
             ->expectsConfirmation(InstallCommand::SHOULD_OVERWRITE_QUESTION, 'yes')
             ->assertExitCode(0);
 
-        $this->assertFileExists($publishPath . '/ckeditor.js');
-        $this->assertFileExists($publishPath . '/config.js');
-        $this->assertFileExists($publishPath . '/styles.js');
-        $this->assertFileExists($publishPath . '/contents.css');
-        $this->assertDirectoryExists($publishPath . '/adapters');
-        $this->assertDirectoryExists($publishPath . '/lang');
-        $this->assertDirectoryExists($publishPath . '/skins');
-        $this->assertDirectoryExists($publishPath . '/plugins');
+        $this->assertInstallation($publishPath);
+    }
+
+    private function assertInstallation($publishPath)
+    {
+        $this->assertFileExists("{$publishPath}/ckeditor.js");
+        $this->assertFileExists("{$publishPath}/config.js");
+        $this->assertFileExists("{$publishPath}/styles.js");
+        $this->assertFileExists("{$publishPath}/contents.css");
+        $this->assertDirectoryExists("{$publishPath}/adapters");
+        $this->assertDirectoryExists("{$publishPath}/lang");
+        $this->assertDirectoryExists("{$publishPath}/skins");
+        $this->assertDirectoryExists("{$publishPath}/plugins");
     }
 }
